@@ -236,6 +236,143 @@ void MergeSortChar(char arr[], int _r, int _l)
     }
 }
 
+int Partition (int arr[], int _low, int _high) 
+{ 
+    int _pivot = arr[_high];   
+    int _i = (_low - 1);  
+    
+    int _j;
+    for (_j = _low; _j <= _high- 1; _j++) 
+    { 
+       
+        if (arr[_j] < _pivot) 
+        { 
+            _i++;   
+            Swap(&arr[_i], &arr[_j]); 
+        } 
+    } 
+    Swap(&arr[_i + 1], &arr[_high]); 
+    return (_i + 1); 
+} 
+  
+
+void QuickSort(int arr[], int _low, int _high) 
+{ 
+    if (_low < _high) 
+    { 
+       
+        int _pi = Partition(arr, _low, _high); 
+  
+       
+        QuickSort(arr, _low, _pi - 1); 
+        QuickSort(arr, _pi + 1, _high); 
+    } 
+}
+
+int PartitionChar (char arr[], int _low, int _high) 
+{ 
+    int _pivot = arr[_high];    
+    int _i = (_low - 1);   
+    
+    int _j;
+    for (_j = _low; _j <= _high- 1; _j++) 
+    { 
+        
+        if (arr[_j] < _pivot) 
+        { 
+            _i++;    
+            SwapChar(&arr[_i], &arr[_j]); 
+        } 
+    } 
+    SwapChar(&arr[_i + 1], &arr[_high]); 
+    return (_i + 1); 
+} 
+  
+
+void QuickSortChar(char arr[], int _low, int _high) 
+{ 
+    if (_low < _high) 
+    { 
+        
+        int _pi = PartitionChar(arr, _low, _high); 
+  
+        
+        QuickSortChar(arr, _low, _pi - 1); 
+        QuickSortChar(arr, _pi + 1, _high); 
+    } 
+}
+
+void Heapify(int arr[], int _n, int _i) {
+    
+    int _largest = _i;
+    int _left = 2 * _i + 1;
+    int _right = 2 * _i + 2;
+  
+    if (_left < _n && arr[_left] > arr[_largest])
+      _largest = _left;
+  
+    if (_right < _n && arr[_right] > arr[_largest])
+      _largest = _right;
+  
+   
+    if (_largest != _i) {
+      Swap(&arr[_i], &arr[_largest]);
+      Heapify(arr, _n, _largest);
+    }
+  }
+  
+  
+  void HeapSort(int arr[], int _n) {
+    
+    int _i;
+    for (_i = _n / 2 - 1; _i >= 0; _i--)
+      Heapify(arr, _n, _i);
+  
+     
+    int _k;
+    for (_k = _n - 1; _k >= 0; _k--) {
+      Swap(&arr[0], &arr[_k]);
+  
+      
+      Heapify(arr, _k, 0);
+    }
+  }
+  void HeapifyChar(char arr[], int _n, int _i) {
+    
+    int _largest = _i;
+    int _left = 2 * _i + 1;
+    int _right = 2 * _i + 2;
+  
+    if (_left < _n && arr[_left] > arr[_largest])
+      _largest = _left;
+  
+    if (_right < _n && arr[_right] > arr[_largest])
+      _largest = _right;
+  
+   
+    if (_largest != _i) {
+      SwapChar(&arr[_i], &arr[_largest]);
+      HeapifyChar(arr, _n, _largest);
+    }
+  }
+  
+  
+  void HeapSortChar(char arr[], int _n) {
+    
+    int _i;
+    for (_i = _n / 2 - 1; _i >= 0; _i--)
+      HeapifyChar(arr, _n, _i);
+  
+   
+    int _k;
+    for (_k = _n - 1; _k >= 0; _k--) {
+      SwapChar(&arr[0], &arr[_k]);
+  
+      
+      HeapifyChar(arr, _k, 0);
+    }
+  }
+
 int main(int argc, char const* argv[])
 {
 	
@@ -321,6 +458,42 @@ int main(int argc, char const* argv[])
 	timeResult = (double)(c2 - c1) / CLOCKS_PER_SEC;
 	printf("Time = %f\n\n", timeResult);
 
+	//quick sort
+	
+	c1 = clock();
+	QuickSort(num,0, _size-1);
+	
+	PrintArray(num, _size);
+	c2 = clock();
+	timeResult = (double)(c2 - c1) / CLOCKS_PER_SEC;
+	printf("Time = %f\n\n", timeResult);
+	c1 = clock();
+	QuickSortChar(name,0, sizeName-1);
+
+	PrintArrayChar(name, sizeName);
+	c2 = clock();
+	timeResult = (double)(c2 - c1) / CLOCKS_PER_SEC;
+	printf("Time = %f\n\n", timeResult);
+	
+	//heap sort
+	
+	c1 = clock();
+	HeapSort(num, _size);
+	
+	PrintArray(num, _size);
+	c2 = clock();
+	timeResult = (double)(c2 - c1) / CLOCKS_PER_SEC;
+	printf("Time = %f\n\n", timeResult);
+	c1 = clock();
+	HeapSortChar(name, sizeName);
+
+	PrintArrayChar(name, sizeName);
+	c2 = clock();
+	timeResult = (double)(c2 - c1) / CLOCKS_PER_SEC;
+	printf("Time = %f\n\n", timeResult);
+	
+	
+	
 	
 	printf("2017556048-Veli Kaan Sarikaya");
 	return 0;
